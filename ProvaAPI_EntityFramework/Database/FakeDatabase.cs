@@ -41,6 +41,13 @@ namespace ProvaAPI_EntityFramework.Database
 
     }
 
+    public class FakeDatabaseSingleton
+    {
+        private static readonly Lazy<FakeDatabase> instance = new Lazy<FakeDatabase>(() => new FakeDatabase());
+
+        public static FakeDatabase Instance => instance.Value;
+    }
+
     public class FakeDatabase
     {
         private static int GlobalIdUser = 0;

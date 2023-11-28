@@ -1,4 +1,6 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using ProvaAPI_EntityFramework.Database;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -6,6 +8,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// permette di configurare il contesto 
+//builder.Services.AddDbContext<MyDbContext>(); 
+
+// Permette di aggiungere degli scopi 
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<BookRepository>();
+//builder.Services.AddScoped<LoanRepository>();
+builder.Services.AddScoped<FakeDatabase>();
 
 var app = builder.Build();
 

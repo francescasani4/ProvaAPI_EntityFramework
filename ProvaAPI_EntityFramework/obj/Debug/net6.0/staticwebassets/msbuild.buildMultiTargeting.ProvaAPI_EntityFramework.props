@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/ProvaAPI_EntityFramework.props" />
+</Project>

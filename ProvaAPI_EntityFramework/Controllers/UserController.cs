@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProvaAPI_EntityFramework.Database;
@@ -24,13 +25,120 @@ namespace ProvaAPI_EntityFramework.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet]
-        public IActionResult AllUser(int? gender)
+        [HttpGet("id")]
+        public IActionResult GetUserById(int idUser)
+        {
+            UserEntity user = _userRepository.GetUserById(idUser);
+
+            if (user == null)
+                return NotFound();
+
+            UserModel u = MapUserEntityToUserModel(user);
+
+            return Ok(u);
+        }
+
+        [HttpGet("name")]
+        public IActionResult GetUserByName(string name)
+        {
+            List<UserEntity> users = _userRepository.GetUsersByName(name);
+
+            if (users.Count == 0)
+                return NotFound();
+
+            List<UserModel> u = users.Select(MapUserEntityToUserModel).ToList();
+
+            return Ok(u);
+        }
+
+        [HttpGet("surname")]
+        public IActionResult GetUserBySurname(string surname)
+        {
+            List<UserEntity> users = _userRepository.GetUsersBySurname(surname);
+
+            if (users.Count == 0)
+                return NotFound();
+
+            List<UserModel> u = users.Select(MapUserEntityToUserModel).ToList();
+
+            return Ok(u);
+        }
+
+        [HttpGet("all")]
+        public IActionResult AllUsers()
         {
                 List<UserEntity> users = _userRepository.GetAllUsers();
                 List<UserModel> u = users.Select(MapUserEntityToUserModel).ToList();
-                return Ok(users);
-            
+
+            return Ok(u);
+        }
+
+        [HttpPost("add")]
+        public IActionResult AddUser([FromBody] UserRequest userRequest)
+        {
+            var user = new UserEntity
+            {
+                UserName = userRequest.UserName,
+                Password = userRequest.Password,
+                Name = userRequest.Name,
+                Surname = userRequest.SurName
+            };
+
+            _userRepository.AddUser(user);
+
+            return Ok();
+        }
+
+        [HttpPost("addByLine")]
+        public IActionResult AddUser(string username, string password, string name, string surname)
+        {
+            var user = new UserEntity
+            {
+                UserName = username,
+                Password = password,
+                Name = name,
+                Surname = surname
+            };
+
+            _userRepository.AddUser(user);
+
+            return Ok();
+        }
+
+        [HttpPut("update")]
+        public IActionResult UpdateUser([FromBody] UserEntity user)
+        {
+            _userRepository.UpdateUser(user);
+
+            return Ok(user);
+        }
+
+        [HttpPut("updateByLine")]
+        public IActionResult UpdateUser(int idUser, string username, string password, string name, string surname)
+        {
+            var user = new UserEntity
+            {
+                IdUser = idUser,
+                UserName = username,
+                Password = password,
+                Name = name,
+                Surname = surname
+            };
+
+            _userRepository.UpdateUser(user);
+
+            return Ok(user);
+        }
+
+        [HttpDelete("delete")]
+        public IActionResult DeleteUser(int idUser)
+        {
+            bool result = _userRepository.DeleteUser(idUser);
+
+            if (!result)
+                return NotFound();
+
+            return Ok();
         }
 
         private UserModel MapUserEntityToUserModel(UserEntity user)

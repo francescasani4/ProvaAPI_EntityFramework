@@ -5,8 +5,11 @@ namespace ProvaAPI_EntityFramework.Database
 {
 	public class MyDbContext : DbContext
 	{
-		public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
+        private readonly FakeDatabase _fakeDatabase;
+
+        public MyDbContext(DbContextOptions<MyDbContext> options, FakeDatabase fakeDatabase) : base(options)
 		{
+            _fakeDatabase = fakeDatabase;
 		}
 
 		public DbSet<UserEntity> Users { get; set; }

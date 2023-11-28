@@ -5,59 +5,81 @@ namespace ProvaAPI_EntityFramework.Database
 {
 	public class BookRepository
 	{
-        private readonly MyDbContext _dbContext;
+        // private readonly MyDbContext _dbContext;
+        private readonly FakeDatabase _fakeDatabase;
 
-        public BookRepository(MyDbContext dbContext)
+        public BookRepository()
         {
-            _dbContext = dbContext;
+            // _dbContext = dbContext;
+            _fakeDatabase = FakeDatabaseSingleton.Instance;
         }
 
         public List<BookEntity> GetAllBooks()
         {
-            return _dbContext.Books.ToList();
+            // return _dbContext.Books.ToList();
+            return _fakeDatabase.Books.ToList();
         }
 
-        public BookEntity GetUsersById(int idBook)
+        public BookEntity GetBookById(int idBook)
         {
-            var book = _dbContext.Books.FirstOrDefault(b => b.IdBook == idBook);
+            // var book = _dbContext.Books.FirstOrDefault(b => b.IdBook == idBook);
+            var book = _fakeDatabase.Books.FirstOrDefault(b => b.IdBook == idBook);
 
             return book;
         }
 
-        public List<BookEntity> GetUsersByTitle(string title)
+        public List<BookEntity> GetBooksByTitle(string title)
         {
-            var books = _dbContext.Books.Where(b => b.Title == title).ToList();
+            //var books = _dbContext.Books.Where(b => b.Title == title).ToList();
+            var books = _fakeDatabase.Books.Where(b => b.Title == title).ToList();
 
             return books;
         }
 
-        public List<BookEntity> GetUsersByAuthor(string author)
+        public List<BookEntity> GetBooksByAuthor(string author)
         {
-            var books = _dbContext.Books.Where(b => b.Author == author).ToList();
+            // var books = _dbContext.Books.Where(b => b.Author == author).ToList();
+            var books = _fakeDatabase.Books.Where(b => b.Author == author).ToList();
+
+            return books;
+        }
+
+        public List<BookEntity> GetBooksByPublicationDate(DateTime publicationDate)
+        {
+            // var books = _dbContext.Books.Where(b => b.PublicationDate == publicationDate).ToList();
+            var books = _fakeDatabase.Books.Where(b => b.PublicationDate == publicationDate).ToList();
 
             return books;
         }
 
         public void AddBook(BookEntity book)
         {
-            _dbContext.Books.Add(book);
-            _dbContext.SaveChanges();
+            // _dbContext.Books.Add(book);
+            // _dbContext.SaveChanges();
+            _fakeDatabase.AddBook(book);
         }
 
-        public void DeleteBook(int idBook)
+        public bool DeleteBook(int idBook)
         {
-            var book = _dbContext.Books.FirstOrDefault(b => b.IdBook == idBook);
+            // var book = _dbContext.Books.FirstOrDefault(b => b.IdBook == idBook);
+            var book = _fakeDatabase.Books.FirstOrDefault(b => b.IdBook == idBook);
+            bool flag = false;
 
             if (book != null)
             {
-                _dbContext.Books.Remove(book);
-                _dbContext.SaveChanges();
+                // _dbContext.Books.Remove(book);
+                // _dbContext.SaveChanges();
+                _fakeDatabase.Books.Remove(book);
+                flag = true;
             }
+
+            return flag;
         }
 
         public void UpdateBook(BookEntity book)
         {
-            var existingBook = _dbContext.Books.FirstOrDefault(b => b.IdBook == book.IdBook);
+            // var existingBook = _dbContext.Books.FirstOrDefault(b => b.IdBook == book.IdBook);
+            var existingBook = _fakeDatabase.Books.FirstOrDefault(b => b.IdBook == book.IdBook);
 
             if (existingBook != null)
             {
@@ -65,7 +87,7 @@ namespace ProvaAPI_EntityFramework.Database
                 existingBook.Author = book.Author;
                 existingBook.PublicationDate = book.PublicationDate;
 
-                _dbContext.SaveChanges();
+                //_dbContext.SaveChanges();
             }
         }
     }
