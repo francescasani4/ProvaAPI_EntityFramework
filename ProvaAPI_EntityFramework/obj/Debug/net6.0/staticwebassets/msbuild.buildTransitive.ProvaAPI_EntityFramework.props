@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../buildMultiTargeting/ProvaAPI_EntityFramework.props" />
+</Project>
