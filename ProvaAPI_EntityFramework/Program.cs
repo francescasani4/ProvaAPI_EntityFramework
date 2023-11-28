@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 // Permette di aggiungere degli scopi 
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<BookRepository>();
-//builder.Services.AddScoped<LoanRepository>();
+builder.Services.AddScoped<LoanRepository>();
 builder.Services.AddScoped<FakeDatabase>();
 
 var app = builder.Build();
