@@ -44,6 +44,13 @@ namespace ProvaAPI_EntityFramework.Database
             return books;
         }
 
+        public List<BookEntity> GetBooksByTitleAndAuthor(string title, string author)
+        {
+            var books = _fakeDatabase.Books.Where(b => b.Title == title && b.Author == author).ToList();
+
+            return books;
+        }
+
         public List<BookEntity> GetBooksByPublicationDate(DateTime publicationDate)
         {
             // var books = _dbContext.Books.Where(b => b.PublicationDate == publicationDate).ToList();

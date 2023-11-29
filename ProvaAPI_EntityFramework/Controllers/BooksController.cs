@@ -22,7 +22,7 @@ namespace ProvaAPI_EntityFramework.Controllers
             _bookRepository = bookRepository;
         }
 
-        [HttpGet("id")]
+        [HttpGet("{idBook}")]
         public IActionResult GetBookById(int idBook)
         {
             BookEntity book = _bookRepository.GetBookById(idBook);
@@ -35,8 +35,8 @@ namespace ProvaAPI_EntityFramework.Controllers
             return Ok(b);
         }
 
-        [HttpGet("title")]
-        public IActionResult GetUserByTitle(string title)
+        /*[HttpGet("title")]
+        public IActionResult GetBookByTitle(string title)
         {
             List<BookEntity> books = _bookRepository.GetBooksByTitle(title);
 
@@ -46,10 +46,10 @@ namespace ProvaAPI_EntityFramework.Controllers
             List<BookModel> b = books.Select(MapBookEntityToBookModel).ToList();
 
             return Ok(b);
-        }
+        }*/
 
-        [HttpGet("author")]
-        public IActionResult GetUserByAuthor(string author)
+        /*[HttpGet("author")]
+        public IActionResult GetBookByAuthor(string author)
         {
             List<BookEntity> books = _bookRepository.GetBooksByAuthor(author);
             
@@ -60,10 +60,10 @@ namespace ProvaAPI_EntityFramework.Controllers
             List<BookModel> b = books.Select(MapBookEntityToBookModel).ToList();
 
             return Ok(b);
-        }
+        }*/
 
-        [HttpGet("publicationDate")]
-        public IActionResult GetUserByPublicationDate(DateTime publicationDate)
+        /*[HttpGet("publicationDate")]
+        public IActionResult GetBookByPublicationDate(DateTime publicationDate)
         {
             List<BookEntity> books = _bookRepository.GetBooksByPublicationDate(publicationDate);
 
@@ -74,18 +74,53 @@ namespace ProvaAPI_EntityFramework.Controllers
             List<BookModel> b = books.Select(MapBookEntityToBookModel).ToList();
 
             return Ok(b);
-        }
+        }*/
 
-        [HttpGet("all")]
-        public IActionResult AllBooks()
+        [HttpGet]
+        public IActionResult AllBooks(string? title, string? author)
         {
-            List<BookEntity> books = _bookRepository.GetAllBooks();
+            if(title == null && author == null)
+            {
+                List<BookEntity> allBooks = _bookRepository.GetAllBooks();
+                List<BookModel> bk = allBooks.Select(MapBookEntityToBookModel).ToList();
+
+                return Ok(bk);
+            }
+            else if(title != null && author == null)
+            {
+                List<BookEntity> booksT = _bookRepository.GetBooksByTitle(title);
+
+                if (booksT.Count == 0)
+                    return NotFound();
+
+                List<BookModel> bk = booksT.Select(MapBookEntityToBookModel).ToList();
+
+                return Ok(bk);
+            }
+            else if(title == null && author != null)
+            {
+                List<BookEntity> booksA = _bookRepository.GetBooksByAuthor(author);
+
+
+                if (booksA.Count == 0)
+                    return NotFound();
+
+                List<BookModel> bk = booksA.Select(MapBookEntityToBookModel).ToList();
+
+                return Ok(bk);
+            }
+
+            List<BookEntity> books = _bookRepository.GetBooksByTitleAndAuthor(title, author);
+
+            if (books.Count == 0)
+                return NotFound();
+
             List<BookModel> b = books.Select(MapBookEntityToBookModel).ToList();
 
             return Ok(b);
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public IActionResult AddBook([FromBody] BookRequest bookRequest)
         {
             var book = new BookEntity
@@ -117,7 +152,7 @@ namespace ProvaAPI_EntityFramework.Controllers
             return Ok(book);
         }*/
 
-        [HttpPut("update")]
+        [HttpPut]
         public IActionResult UpdateBook([FromBody] BookEntity book)
         {
             bool result = _bookRepository.UpdateBook(book);
@@ -142,7 +177,7 @@ namespace ProvaAPI_EntityFramework.Controllers
             return Ok(book);
         }*/
 
-        [HttpDelete("delete")]
+        [HttpDelete]
         public IActionResult DeleteBook(int idBook)
         {
             bool result = _bookRepository.DeleteBook(idBook);

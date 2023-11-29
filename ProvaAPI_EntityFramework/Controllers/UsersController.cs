@@ -50,9 +50,9 @@ namespace ProvaAPI_EntityFramework.Controllers
             List<UserModel> u = users.Select(MapUserEntityToUserModel).ToList();
 
             return Ok(u);
-        }
+        }*/
 
-        [HttpGet("surname")]
+        /*[HttpGet("surname")]
         public IActionResult GetUserBySurname(string surname)
         {
             List<UserEntity> users = _userRepository.GetUsersBySurname(surname);
