@@ -76,19 +76,33 @@ namespace ProvaAPI_EntityFramework.Database
             return flag;
         }
 
-        public void UpdateBook(BookEntity book)
+        public bool UpdateBook(BookEntity book)
         {
             // var existingBook = _dbContext.Books.FirstOrDefault(b => b.IdBook == book.IdBook);
             var existingBook = _fakeDatabase.Books.FirstOrDefault(b => b.IdBook == book.IdBook);
+            bool flag = false;
 
-            if (existingBook != null)
+            if (existingBook != null) //&& existingUser != null)
             {
                 existingBook.Title = book.Title;
                 existingBook.Author = book.Author;
                 existingBook.PublicationDate = book.PublicationDate;
 
+                if(book.IdUser != null)
+                {
+                    var existingUser = _fakeDatabase.Users.FirstOrDefault(u => u.IdUser == book.IdUser); //controllo se l'id dell'utente esiste
+
+                    if (existingUser != null)
+                        flag = true;
+                }
+                    
+                existingBook.IdUser = book.IdUser;
+                flag = true;
+
                 //_dbContext.SaveChanges();
             }
+
+            return flag;
         }
     }
 }

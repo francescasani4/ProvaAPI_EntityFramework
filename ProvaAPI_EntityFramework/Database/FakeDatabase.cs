@@ -23,9 +23,11 @@ namespace ProvaAPI_EntityFramework.Database
         public string Author { get; set; }
 
         public DateTime PublicationDate { get; set; }
+
+        public int? IdUser { get; set; }
     }
 
-    public class LoanEntity
+    /*public class LoanEntity
     {
         public int IdLoan { get; set; }
 
@@ -39,7 +41,7 @@ namespace ProvaAPI_EntityFramework.Database
 
         public bool IsReturned { get; set; }
 
-    }
+    }*/
 
     public class FakeDatabaseSingleton
     {
@@ -52,17 +54,17 @@ namespace ProvaAPI_EntityFramework.Database
     {
         private static int GlobalIdUser = 0;
         private static int GlobalIdBook = 0;
-        private static int GlobalIdLoan = 0;
+        /*private static int GlobalIdLoan = 0;*/
 
         public List<UserEntity> Users { get; set; }
         public List<BookEntity> Books { get; set; }
-        public List<LoanEntity> Loans { get; set; }
+        /*public List<LoanEntity> Loans { get; set; }*/
 
         public FakeDatabase()
         {
             Users = new List<UserEntity>();
             Books = new List<BookEntity>();
-            Loans = new List<LoanEntity>();
+            /*Loans = new List<LoanEntity>();*/
 
             AddUserInternal(new UserEntity
             {
@@ -100,24 +102,27 @@ namespace ProvaAPI_EntityFramework.Database
             {
                 Title = "Title1",
                 Author = "Author1",
-                PublicationDate = new DateTime(2020, 1, 1)
-            });
+                PublicationDate = new DateTime(2020, 1, 1),
+                IdUser = null
+            }) ;
 
             AddBookInternal(new BookEntity
             {
                 Title = "Title2",
                 Author = "Author2",
-                PublicationDate = new DateTime(2018, 4, 4)
+                PublicationDate = new DateTime(2018, 4, 4),
+                IdUser = null
             });
 
             AddBookInternal(new BookEntity
             {
                 Title = "Title3",
                 Author = "Author3",
-                PublicationDate = new DateTime(2000, 12, 4)
+                PublicationDate = new DateTime(2000, 12, 4),
+                IdUser = null
             });
 
-            AddLoanInternal(new LoanEntity
+            /*AddLoanInternal(new LoanEntity
             {
                 IdBook = 1,
                 IdUser = 2,
@@ -133,7 +138,7 @@ namespace ProvaAPI_EntityFramework.Database
                 LoanDate = new DateTime(2023, 10, 20),
                 DueDate = new DateTime(2024, 1, 20),
                 IsReturned = false
-            });
+            });*/
         }
 
         public void AddUser(UserEntity user)
@@ -164,7 +169,7 @@ namespace ProvaAPI_EntityFramework.Database
             Books.Add(book);
         }
 
-        public void AddLoan(int idBook, int idUser, int loanDays)
+        /*public void AddLoan(int idBook, int idUser, int loanDays)
         {
 
             BookEntity book = Books.FirstOrDefault(b => b.IdBook == idBook);
@@ -195,7 +200,7 @@ namespace ProvaAPI_EntityFramework.Database
             loan.IdLoan = GlobalIdLoan;
 
             Loans.Add(loan);
-        }
+        }*/
     }
 }
 

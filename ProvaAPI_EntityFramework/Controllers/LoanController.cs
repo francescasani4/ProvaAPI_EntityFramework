@@ -11,7 +11,7 @@ using ProvaAPI_EntityFramework.Model;
 
 namespace ProvaAPI_EntityFramework.Controllers
 {
-    [Route("api/[controller]")]
+    /*[Route("api/[controller]")]
     [ApiController]
     public class LoanController : Controller
     {
@@ -153,6 +153,6 @@ namespace ProvaAPI_EntityFramework.Controllers
                 IsReturned = loan.IsReturned
             };
         }
-    }
+    }*/
 }
 

@@ -16,7 +16,7 @@ namespace ProvaAPI_EntityFramework.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : Controller
+    public class UserController : ControllerBase
     {
         private readonly UserRepository _userRepository;
 

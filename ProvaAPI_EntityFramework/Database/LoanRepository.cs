@@ -2,7 +2,7 @@
 
 namespace ProvaAPI_EntityFramework.Database
 {
-	public class LoanRepository
+	/*public class LoanRepository
 	{
         private readonly FakeDatabase _fakeDatabase;
 
@@ -84,6 +84,6 @@ namespace ProvaAPI_EntityFramework.Database
                 existingLoan.IsReturned = loan.IsReturned;
             }
         }
-    }
+    }*/
 }
 

@@ -10,6 +10,8 @@ namespace ProvaAPI_EntityFramework.Model
         public string Author { get; set; }
 
         public DateTime PublicationDate { get; set; }
+
+        public int? IdUser { get; set; }
     }
 }
 

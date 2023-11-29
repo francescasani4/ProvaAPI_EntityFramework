@@ -13,7 +13,7 @@ namespace ProvaAPI_EntityFramework.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookController : Controller
+    public class BookController : ControllerBase
     {
         public readonly BookRepository _bookRepository;
 
@@ -92,7 +92,8 @@ namespace ProvaAPI_EntityFramework.Controllers
             {
                 Title = bookRequest.Title,
                 Author = bookRequest.Author,
-                PublicationDate = bookRequest.PublicationDate
+                PublicationDate = bookRequest.PublicationDate,
+                IdUser = null
             };
 
             _bookRepository.AddBook(book);
@@ -100,30 +101,32 @@ namespace ProvaAPI_EntityFramework.Controllers
             return Ok();
         }
 
-        [HttpPost("addByLine")]
+        /*[HttpPost("addByLine")]
         public IActionResult AddBook(string title, string author, DateTime publicationDate)
         {
             var book = new BookEntity
             {
                 Title = title,
                 Author = author,
-                PublicationDate = publicationDate
+                PublicationDate = publicationDate,
+                IdUser = null
             };
 
             _bookRepository.AddBook(book);
 
             return Ok(book);
-        }
+        }*/
 
         [HttpPut("update")]
         public IActionResult UpdateBook([FromBody] BookEntity book)
         {
-            _bookRepository.UpdateBook(book);
+            bool result = _bookRepository.UpdateBook(book);
+
 
             return Ok(book);
         }
 
-        [HttpPut("updateByLine")]
+        /*[HttpPut("updateByLine")]
         public IActionResult UpdateBook(int idBook, string title, string author, DateTime publicationDate)
         {
             var book = new BookEntity
@@ -137,7 +140,7 @@ namespace ProvaAPI_EntityFramework.Controllers
             _bookRepository.UpdateBook(book);
 
             return Ok(book);
-        }
+        }*/
 
         [HttpDelete("delete")]
         public IActionResult DeleteBook(int idBook)
@@ -157,7 +160,8 @@ namespace ProvaAPI_EntityFramework.Controllers
                 IdBook = book.IdBook,
                 Title = book.Title,
                 Author = book.Author,
-                PublicationDate = book.PublicationDate
+                PublicationDate = book.PublicationDate,
+                IdUser = book.IdUser
             };
         }
     }

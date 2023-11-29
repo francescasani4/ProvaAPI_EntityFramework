@@ -1,7 +1,7 @@
 ﻿using System;
 namespace ProvaAPI_EntityFramework.Model
 {
-	public class LoanModel
+	/*public class LoanModel
 	{
         public int IdLoan { get; set; }
 
@@ -14,6 +14,6 @@ namespace ProvaAPI_EntityFramework.Model
         public DateTime DueDate { get; set; }
 
         public bool IsReturned { get; set; }
-    }
+    }*/
 }
 
