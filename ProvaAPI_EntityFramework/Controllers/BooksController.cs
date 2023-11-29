@@ -13,11 +13,11 @@ namespace ProvaAPI_EntityFramework.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookController : ControllerBase
+    public class BooksController : ControllerBase
     {
         public readonly BookRepository _bookRepository;
 
-        public BookController(BookRepository bookRepository)
+        public BooksController(BookRepository bookRepository)
         {
             _bookRepository = bookRepository;
         }

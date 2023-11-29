@@ -16,16 +16,17 @@ namespace ProvaAPI_EntityFramework.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly UserRepository _userRepository;
 
-        public UserController(UserRepository userRepository)
+        public UsersController(UserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
-        [HttpGet("id")]
+        [HttpGet("{idUser}")]
+        // [Route("{idUser}")]
         public IActionResult GetUserById(int idUser)
         {
             UserEntity user = _userRepository.GetUserById(idUser);
@@ -38,7 +39,7 @@ namespace ProvaAPI_EntityFramework.Controllers
             return Ok(u);
         }
 
-        [HttpGet("name")]
+        /*[HttpGet("name")]
         public IActionResult GetUserByName(string name)
         {
             List<UserEntity> users = _userRepository.GetUsersByName(name);
@@ -62,18 +63,32 @@ namespace ProvaAPI_EntityFramework.Controllers
             List<UserModel> u = users.Select(MapUserEntityToUserModel).ToList();
 
             return Ok(u);
-        }
+        }*/
 
-        [HttpGet("all")]
-        public IActionResult AllUsers()
+        [HttpGet]
+        public IActionResult AllUsers(string? name)
         {
-                List<UserEntity> users = _userRepository.GetAllUsers();
-                List<UserModel> u = users.Select(MapUserEntityToUserModel).ToList();
+            if(name == null)
+            {
+                List<UserEntity> allUsers = _userRepository.GetAllUsers();
+                List<UserModel> us = allUsers.Select(MapUserEntityToUserModel).ToList();
 
-            return Ok(u);
+                return Ok(us);
+            }
+
+            List<UserEntity> users = _userRepository.GetUsersByName(name);
+
+            if(users == null)
+            {
+                return NotFound();
+            }
+
+            List<UserModel> u = users.Select(MapUserEntityToUserModel).ToList();
+
+            return Ok(u);   
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public IActionResult AddUser([FromBody] UserRequest userRequest)
         {
             var user = new UserEntity
@@ -89,7 +104,7 @@ namespace ProvaAPI_EntityFramework.Controllers
             return Ok();
         }
 
-        [HttpPost("addByLine")]
+        /*[HttpPost("addByLine")]
         public IActionResult AddUser(string username, string password, string name, string surname)
         {
             var user = new UserEntity
@@ -103,9 +118,9 @@ namespace ProvaAPI_EntityFramework.Controllers
             _userRepository.AddUser(user);
 
             return Ok();
-        }
+        }*/
 
-        [HttpPut("update")]
+        [HttpPut]
         public IActionResult UpdateUser([FromBody] UserEntity user)
         {
             _userRepository.UpdateUser(user);
@@ -113,7 +128,7 @@ namespace ProvaAPI_EntityFramework.Controllers
             return Ok(user);
         }
 
-        [HttpPut("updateByLine")]
+        /*[HttpPut("updateByLine")]
         public IActionResult UpdateUser(int idUser, string username, string password, string name, string surname)
         {
             var user = new UserEntity
@@ -128,9 +143,9 @@ namespace ProvaAPI_EntityFramework.Controllers
             _userRepository.UpdateUser(user);
 
             return Ok(user);
-        }
+        }*/
 
-        [HttpDelete("delete")]
+        [HttpDelete]
         public IActionResult DeleteUser(int idUser)
         {
             bool result = _userRepository.DeleteUser(idUser);
