@@ -22,7 +22,8 @@ namespace ProvaAPI_EntityFramework.Controllers
             _bookRepository = bookRepository;
         }
 
-        [HttpGet("{idBook}")]
+        [HttpGet]
+        [Route("{idBook}")]
         public IActionResult GetBookById(int idBook)
         {
             BookEntity book = _bookRepository.GetBookById(idBook);
@@ -153,10 +154,10 @@ namespace ProvaAPI_EntityFramework.Controllers
         }*/
 
         [HttpPut]
+        [Route("{idBook}")]
         public IActionResult UpdateBook([FromBody] BookEntity book)
         {
             bool result = _bookRepository.UpdateBook(book);
-
 
             return Ok(book);
         }
@@ -178,7 +179,8 @@ namespace ProvaAPI_EntityFramework.Controllers
         }*/
 
         [HttpDelete]
-        public IActionResult DeleteBook(int idBook)
+        [Route("{idBook}")]
+        public IActionResult DeleteBook([FromRoute] int idBook)
         {
             bool result = _bookRepository.DeleteBook(idBook);
 

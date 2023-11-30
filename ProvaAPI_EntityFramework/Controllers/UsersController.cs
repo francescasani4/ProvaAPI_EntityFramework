@@ -25,8 +25,8 @@ namespace ProvaAPI_EntityFramework.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet("{idUser}")]
-        // [Route("{idUser}")]
+        [HttpGet]
+        [Route("{idUser}")]
         public IActionResult GetUserById(int idUser)
         {
             UserEntity user = _userRepository.GetUserById(idUser);
@@ -121,6 +121,7 @@ namespace ProvaAPI_EntityFramework.Controllers
         }*/
 
         [HttpPut]
+        [Route("{idUser}")]
         public IActionResult UpdateUser([FromBody] UserEntity user)
         {
             _userRepository.UpdateUser(user);
@@ -146,7 +147,8 @@ namespace ProvaAPI_EntityFramework.Controllers
         }*/
 
         [HttpDelete]
-        public IActionResult DeleteUser(int idUser)
+        [Route("{idUser}")]
+        public IActionResult DeleteUser([FromRoute] int idUser)
         {
             bool result = _userRepository.DeleteUser(idUser);
 

@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<BookRepository>();
 /*builder.Services.AddScoped<LoanRepository>();*/
-builder.Services.AddScoped<FakeDatabase>();
+builder.Services.AddSingleton<FakeDatabase>();
 
 var app = builder.Build();
 
